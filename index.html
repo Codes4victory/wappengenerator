@@ -1,0 +1,39 @@
+import random
+from PIL import Image, ImageDraw, ImageFont
+
+def generate_wappen(name, birth_place, traits):
+    # Farben basierend auf Charaktereigenschaften
+    color_map = {
+        "mutig": "red", "weise": "blue", "mystisch": "purple",
+        "ruhig": "green", "leidenschaftlich": "orange", "stark": "black"
+    }
+    
+    # Symbole (vereinfachte Zuordnung)
+    symbol_map = {
+        "feuer": "🔥", "wasser": "💧", "erde": "🌿", "luft": "🌬️",
+        "wolf": "🐺", "drache": "🐉", "rabe": "🦅", "schlange": "🐍"
+    }
+    
+    # Wähle Farbe und Symbol basierend auf den Charakterzügen
+    chosen_color = color_map.get(traits[0].lower(), "gray")
+    chosen_symbol = symbol_map.get(traits[-1].lower(), "✨")
+    
+    # Erstellt ein einfaches Wappen mit Farbe und Symbol
+    img = Image.new("RGB", (400, 500), chosen_color)
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.load_default()
+    
+    # Wappen-Schild zeichnen
+    draw.rectangle([50, 100, 350, 450], outline="gold", width=10)
+    
+    # Namen und Symbol einfügen
+    draw.text((150, 50), name, fill="white", font=font)
+    draw.text((180, 250), chosen_symbol, fill="white", font=font)
+    
+    # Wappen speichern
+    filename = f"{name}_wappen.png"
+    img.save(filename)
+    print(f"Wappen für {name} gespeichert als {filename}")
+
+# Beispiel
+generate_wappen("Leonhardt", "Berlin", ["mutig", "drache"])
